@@ -100,6 +100,12 @@ export class Patient extends Model<Patient, IPatientCreationAttr> {
   })
   declare registered_at: Date;
 
+  @Column({
+    type: DataType.STRING,
+    defaultValue: DataType.UUIDV4(),
+  })
+  declare activation_link: string;
+
   @HasMany(() => Appointment)
   appointments: Appointment[];
 

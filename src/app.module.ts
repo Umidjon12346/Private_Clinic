@@ -22,6 +22,7 @@ import { Appointment } from "./appointments/models/appointment.model";
 import { Payment } from "./payments/models/payment.model";
 import { MedicalRecord } from "./medical_records/models/medical_record.model";
 import { AuthModule } from './auth/auth.module';
+import { MailModule } from "./mail/mail.module";
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { AuthModule } from './auth/auth.module';
     PatientServicesModule,
     PaymentsModule,
     AuthModule,
+    MailModule
   ],
   controllers: [],
   providers: [],

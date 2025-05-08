@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from "@nestjs/swagger";
 import { StaffsService } from "./staffs.service";
 import { CreateStaffDto } from "./dto/create-staff.dto";
 import { UpdateStaffDto } from "./dto/update-staff.dto";
+import { AuthGuard } from "../common/guards/auth.guard";
 
 @ApiTags("Staffs") // Controller uchun umumiy tag
 @Controller("staffs")
@@ -31,6 +33,7 @@ export class StaffsController {
     status: 200,
     description: "Barcha xodimlar muvaffaqiyatli qaytarildi.",
   })
+  @UseGuards(AuthGuard)
   findAll() {
     return this.staffsService.findAll();
   }

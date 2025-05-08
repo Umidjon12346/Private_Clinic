@@ -49,7 +49,7 @@ export class AuthPatientService {
     }
 
     const newUser = await this.patientService.create(createPatientDto);
-    return { message: "Foydalanuvchi qoshildida", userId: newUser.id };
+    return { message: "Foydalanuvchi qoshildida", newUser };
   }
 
   async signIn(signIndto: SignInDto, res: Response) {
@@ -57,9 +57,15 @@ export class AuthPatientService {
     if (!staff) {
       throw new BadRequestException("Email yoki password");
     }
+    if (!staff.is_active) {
+      throw new BadRequestException("Avval emaildagi habarni tasdiqlang");
+    }
     const isValid = await bcrypt.compare(signIndto.password, staff.password);
     if (!isValid) {
       throw new BadRequestException("Email yoki password");
+    }
+    if (!staff.is_active){
+        throw new BadRequestException("Avval email orqali acyive boling")
     }
     const { accessToken, refreshToken } = await this.generateTokens(staff);
 

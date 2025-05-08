@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from "@nestjs/swagger";
 import { AnalysisResultsService } from "./analysis_results.service";
 import { CreateAnalysisResultDto } from "./dto/create-analysis_result.dto";
 import { UpdateAnalysisResultDto } from "./dto/update-analysis_result.dto";
+import { AuthGuard } from "../common/guards/auth.guard";
 
 @ApiTags("Analysis Results") // Controller uchun umumiy tag
 @Controller("analysis-results")
@@ -26,6 +28,7 @@ export class AnalysisResultsController {
     description: "Tahlil natijasi muvaffaqiyatli yaratildi.",
   })
   @ApiResponse({ status: 400, description: "Yaratishda xato" })
+  @UseGuards(AuthGuard)
   create(@Body() createAnalysisResultDto: CreateAnalysisResultDto) {
     return this.analysisResultsService.create(createAnalysisResultDto);
   }
@@ -36,6 +39,7 @@ export class AnalysisResultsController {
     status: 200,
     description: "Barcha tahlil natijalari muvaffaqiyatli qaytarildi.",
   })
+  @UseGuards(AuthGuard)
   findAll() {
     return this.analysisResultsService.findAll();
   }
@@ -48,6 +52,7 @@ export class AnalysisResultsController {
     description: "Tahlil natijasi muvaffaqiyatli qaytarildi.",
   })
   @ApiResponse({ status: 404, description: "Tahlil natijasi topilmadi" })
+  @UseGuards(AuthGuard)
   findOne(@Param("id") id: string) {
     return this.analysisResultsService.findOne(+id);
   }
@@ -61,6 +66,7 @@ export class AnalysisResultsController {
   })
   @ApiResponse({ status: 400, description: "Yangilashda xato" })
   @ApiResponse({ status: 404, description: "Tahlil natijasi topilmadi" })
+  @UseGuards(AuthGuard)
   update(
     @Param("id") id: string,
     @Body() updateAnalysisResultDto: UpdateAnalysisResultDto
@@ -76,6 +82,7 @@ export class AnalysisResultsController {
     description: "Tahlil natijasi muvaffaqiyatli o‘chirildi.",
   })
   @ApiResponse({ status: 404, description: "Tahlil natijasi topilmadi" })
+  @UseGuards(AuthGuard)
   remove(@Param("id") id: string) {
     return this.analysisResultsService.remove(+id);
   }
